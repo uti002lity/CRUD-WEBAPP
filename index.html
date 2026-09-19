@@ -32,7 +32,6 @@
         body {
             font-family: 'Inter', sans-serif;
         }
-        /* Custom scrollbar for table */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -65,7 +64,7 @@
             <div class="flex items-center space-x-4">
                 <nav class="hidden md:flex space-x-6 text-sm font-medium">
                     <a href="#fitur" class="hover:text-brand-500 transition-colors">Fitur</a>
-                    <a href="#demo" class="hover:text-brand-500 transition-colors">Demo Interactive</a>
+                    <a href="#demo" class="hover:text-brand-500 transition-colors">Aplikasi CRUD</a>
                     <a href="#panduan" class="hover:text-brand-500 transition-colors">Panduan Setup</a>
                 </nav>
                 <button id="themeToggleBtn" onclick="toggleDarkMode()" class="p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" title="Ubah Tema">
@@ -80,57 +79,18 @@
         <section class="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
             <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand-50 dark:bg-brand-900/30 border border-brand-200 dark:border-brand-800/50 text-brand-700 dark:text-brand-300 text-xs sm:text-sm font-medium mb-6">
                 <span class="flex h-2 w-2 rounded-full bg-brand-500 animate-ping"></span>
-                <span>Hosted on GitHub Pages</span>
+                <span>Terhubung ke Google Sheets API</span>
             </div>
             <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight max-w-4xl mx-auto leading-tight">
                 Kelola Data <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-emerald-400">Google Sheets</span> Langsung dari Web App
             </h1>
             <p class="mt-6 text-lg sm:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-                Solusi modern tanpa backend berat. Lakukan Create, Read, Update, dan Delete data Spreadsheet dengan cepat, aman, dan responsif.
+                Solusi modern tanpa backend berat. Lakukan Create, Read, Update, dan Delete data Spreadsheet secara permanen.
             </p>
             <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
                 <a href="#demo" class="px-6 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold shadow-lg shadow-brand-600/30 transition-all transform hover:-translate-y-0.5">
-                    <i class="fa-solid fa-play mr-2"></i>Coba Simulator CRUD
+                    <i class="fa-solid fa-table mr-2"></i>Buka Tabel Data
                 </a>
-                <a href="#panduan" class="px-6 py-3.5 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold transition-all">
-                    <i class="fa-solid fa-book mr-2"></i>Cara Integrasi API
-                </a>
-            </div>
-        </section>
-
-        <!-- Fitur Utama -->
-        <section id="fitur" class="py-12 bg-slate-100/50 dark:bg-slate-800/30 border-y border-slate-200 dark:border-slate-800">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
-                    <h2 class="text-2xl sm:text-3xl font-bold">Keunggulan Web App</h2>
-                    <p class="text-slate-600 dark:text-slate-400 mt-2">Mengapa mengintegrasikan Google Sheets dengan web app?</p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Feature 1 -->
-                    <div class="p-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
-                        <div class="w-12 h-12 rounded-xl bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl mb-4">
-                            <i class="fa-solid fa-bolt"></i>
-                        </div>
-                        <h3 class="text-lg font-bold mb-2">Real-time Sync</h3>
-                        <p class="text-slate-600 dark:text-slate-400 text-sm">Data yang ditambahkan atau diperbarui langsung tersinkronisasi ke Google Sheets spreadsheet kamu.</p>
-                    </div>
-                    <!-- Feature 2 -->
-                    <div class="p-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
-                        <div class="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xl mb-4">
-                            <i class="fa-solid fa-mobile-screen"></i>
-                        </div>
-                        <h3 class="text-lg font-bold mb-2">Desain Responsif</h3>
-                        <p class="text-slate-600 dark:text-slate-400 text-sm">Tampilan yang dioptimalkan untuk perangkat mobile, tablet, hingga desktop tanpa gangguan layout.</p>
-                    </div>
-                    <!-- Feature 3 -->
-                    <div class="p-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
-                        <div class="w-12 h-12 rounded-xl bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl mb-4">
-                            <i class="fa-solid fa-lock"></i>
-                        </div>
-                        <h3 class="text-lg font-bold mb-2">Aman & Tanpa Server</h3>
-                        <p class="text-slate-600 dark:text-slate-400 text-sm">Dihosting gratis di GitHub Pages. Tanpa perlu sewa server backend bulanan.</p>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -139,17 +99,17 @@
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
                 <div>
                     <div class="inline-flex items-center space-x-2 text-xs font-semibold uppercase tracking-wider text-brand-600 dark:text-brand-400 mb-1">
-                        <i class="fa-solid fa-flask"></i>
-                        <span>Live Demo Simulator</span>
+                        <i class="fa-solid fa-database"></i>
+                        <span>Live Database Integration</span>
                     </div>
                     <h2 class="text-2xl sm:text-3xl font-bold">Aplikasi CRUD Spreadsheet</h2>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">Uji coba interaksi tabel data dibawah ini (Create, Read, Update, Delete).</p>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">Data di bawah ini disinkronkan secara langsung dengan Google Sheets.</p>
                 </div>
                 
                 <div class="flex items-center space-x-3">
-                    <span id="connectionStatus" class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-300">
-                        <span class="w-2 h-2 mr-1.5 bg-emerald-500 rounded-full animate-pulse"></span> Mode Demo Terhubung
-                    </span>
+                    <button onclick="fetchData()" class="p-2 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 rounded-lg text-sm font-medium transition-colors" title="Refresh Data">
+                        <i class="fa-solid fa-rotate-right"></i>
+                    </button>
                     <button onclick="openAddModal()" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold rounded-lg shadow transition-colors flex items-center space-x-2">
                         <i class="fa-solid fa-plus"></i>
                         <span>Tambah Data</span>
@@ -175,7 +135,14 @@
             </div>
 
             <!-- Table Container -->
-            <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+            <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden relative">
+                
+                <!-- Loading Overlay -->
+                <div id="loadingOverlay" class="absolute inset-0 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
+                    <i class="fa-solid fa-spinner animate-spin text-3xl text-brand-600 mb-2"></i>
+                    <span class="text-sm font-medium text-slate-600 dark:text-slate-300">Memuat Data dari Google Sheets...</span>
+                </div>
+
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-sm">
                         <thead class="bg-slate-50 dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 uppercase text-[11px] tracking-wider">
@@ -201,48 +168,12 @@
                 </div>
             </div>
         </section>
-
-        <!-- Integration Guide Section -->
-        <section id="panduan" class="py-16 bg-slate-100/50 dark:bg-slate-800/30 border-t border-slate-200 dark:border-slate-800">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-2xl sm:text-3xl font-bold text-center mb-8">Cara Menghubungkan ke Google Sheets API</h2>
-                
-                <div class="space-y-6">
-                    <div class="flex items-start space-x-4 p-5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-                        <div class="w-8 h-8 rounded-full bg-brand-100 dark:bg-brand-900/50 text-brand-600 dark:text-brand-400 flex items-center justify-center font-bold text-sm shrink-0">1</div>
-                        <div>
-                            <h3 class="font-semibold text-base mb-1">Buat Google Apps Script</h3>
-                            <p class="text-slate-600 dark:text-slate-400 text-sm">Buka Google Sheet kamu, klik <strong>Extensions > Apps Script</strong>. Tuliskan kode fungsi `doGet()` dan `doPost()` untuk mengolah data JSON.</p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start space-x-4 p-5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-                        <div class="w-8 h-8 rounded-full bg-brand-100 dark:bg-brand-900/50 text-brand-600 dark:text-brand-400 flex items-center justify-center font-bold text-sm shrink-0">2</div>
-                        <div>
-                            <h3 class="font-semibold text-base mb-1">Deploy sebagai Web App</h3>
-                            <p class="text-slate-600 dark:text-slate-400 text-sm">Di Apps Script, klik <strong>Deploy > New Deployment</strong>. Pilih jenis <em>Web app</em> dan atur akses "Who has access" menjadi <strong>Anyone</strong>.</p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start space-x-4 p-5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-                        <div class="w-8 h-8 rounded-full bg-brand-100 dark:bg-brand-900/50 text-brand-600 dark:text-brand-400 flex items-center justify-center font-bold text-sm shrink-0">3</div>
-                        <div>
-                            <h3 class="font-semibold text-base mb-1">Panggil Endpoint URL via `fetch()`</h3>
-                            <p class="text-slate-600 dark:text-slate-400 text-sm">Gunakan Web App URL yang diberikan Google untuk dipanggil melalui JavaScript di file HTML ini.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
 
     <!-- Footer -->
     <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
             <p>&copy; 2026 SheetFlow. Di-host di GitHub Pages secara Gratis.</p>
-            <div class="flex space-x-4">
-                <a href="https://github.com" target="_blank" class="hover:text-slate-800 dark:hover:text-slate-200"><i class="fa-brands fa-github text-base"></i> GitHub</a>
-            </div>
         </div>
     </footer>
 
@@ -285,7 +216,9 @@
                 </div>
                 <div class="pt-4 flex justify-end space-x-3">
                     <button type="button" onclick="closeModal()" class="px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-700">Batal</button>
-                    <button type="submit" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg text-sm font-semibold shadow">Simpan Data</button>
+                    <button type="submit" id="submitBtn" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg text-sm font-semibold shadow flex items-center space-x-2">
+                        <span id="submitBtnText">Simpan Data</span>
+                    </button>
                 </div>
             </form>
         </div>
@@ -298,13 +231,10 @@
     </div>
 
     <script>
-        // Data Mock Initial State
-        let mockData = [
-            { id: "S-101", name: "Ahmad Rizky", email: "ahmad@example.com", role: "Admin", status: "Aktif" },
-            { id: "S-102", name: "Siti Rahma", email: "siti@example.com", role: "Editor", status: "Aktif" },
-            { id: "S-103", name: "Dewi Lestari", email: "dewi@example.com", role: "Viewer", status: "Pending" },
-            { id: "S-104", name: "Budi Setiawan", email: "budi@example.com", role: "Editor", status: "Nonaktif" }
-        ];
+        // URL Google Apps Script milikmu
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz8ekJkWZlBW0YDIjWbagXdz-CzQoK7YaFXREtuuU1qAkRHGjWeH8JgvTzEUkeGNnc/exec';
+
+        let sheetData = [];
 
         // Dark / Light Theme Logic
         function toggleDarkMode() {
@@ -319,6 +249,21 @@
             }
         }
 
+        // Fetch Data dari Google Sheets
+        async function fetchData() {
+            showLoading(true);
+            try {
+                const response = await fetch(APPS_SCRIPT_URL);
+                sheetData = await response.json();
+                renderTable();
+            } catch (error) {
+                console.error("Error loading data:", error);
+                showToast("Gagal mengambil data dari Google Sheets", true);
+            } finally {
+                showLoading(false);
+            }
+        }
+
         // Render Table Data
         function renderTable() {
             const tbody = document.getElementById('tableBody');
@@ -328,8 +273,10 @@
 
             tbody.innerHTML = '';
 
-            const filtered = mockData.filter(item => {
-                const matchesSearch = item.name.toLowerCase().includes(searchVal) || item.email.toLowerCase().includes(searchVal);
+            const filtered = sheetData.filter(item => {
+                const name = item.name ? item.name.toString().toLowerCase() : '';
+                const email = item.email ? item.email.toString().toLowerCase() : '';
+                const matchesSearch = name.includes(searchVal) || email.includes(searchVal);
                 const matchesStatus = statusVal === 'ALL' || item.status === statusVal;
                 return matchesSearch && matchesStatus;
             });
@@ -347,13 +294,13 @@
                     const tr = document.createElement('tr');
                     tr.className = 'hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors';
                     tr.innerHTML = `
-                        <td class="py-3.5 px-4 font-mono text-xs text-slate-500">${item.id}</td>
-                        <td class="py-3.5 px-4 font-semibold text-slate-900 dark:text-slate-100">${item.name}</td>
-                        <td class="py-3.5 px-4 text-slate-600 dark:text-slate-400">${item.email}</td>
-                        <td class="py-3.5 px-4">${item.role}</td>
+                        <td class="py-3.5 px-4 font-mono text-xs text-slate-500">${item.id || '-'}</td>
+                        <td class="py-3.5 px-4 font-semibold text-slate-900 dark:text-slate-100">${item.name || ''}</td>
+                        <td class="py-3.5 px-4 text-slate-600 dark:text-slate-400">${item.email || ''}</td>
+                        <td class="py-3.5 px-4">${item.role || ''}</td>
                         <td class="py-3.5 px-4">
                             <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold ${badgeClass}">
-                                ${item.status}
+                                ${item.status || ''}
                             </span>
                         </td>
                         <td class="py-3.5 px-4 text-right space-x-2">
@@ -385,7 +332,7 @@
         }
 
         function openEditModal(id) {
-            const item = mockData.find(d => d.id === id);
+            const item = sheetData.find(d => String(d.id) === String(id));
             if (!item) return;
 
             document.getElementById('modalTitle').innerText = 'Edit Data';
@@ -406,8 +353,8 @@
             modal.classList.remove('flex');
         }
 
-        // Save & Edit Form Handler
-        function handleFormSubmit(e) {
+        // Save & Edit Form Handler (POST ke Google Apps Script)
+        async function handleFormSubmit(e) {
             e.preventDefault();
             const editId = document.getElementById('editId').value;
             const name = document.getElementById('inputName').value;
@@ -415,37 +362,85 @@
             const role = document.getElementById('inputRole').value;
             const status = document.getElementById('inputStatus').value;
 
-            if (editId) {
-                // Update existing item
-                const index = mockData.findIndex(d => d.id === editId);
-                if (index !== -1) {
-                    mockData[index] = { id: editId, name, email, role, status };
-                    showToast('Data berhasil diperbarui!');
-                }
-            } else {
-                // Add new item
-                const newId = 'S-' + (Math.floor(Math.random() * 800) + 100);
-                mockData.unshift({ id: newId, name, email, role, status });
-                showToast('Data baru berhasil ditambahkan!');
-            }
+            const submitBtnText = document.getElementById('submitBtnText');
+            submitBtnText.innerText = 'Menyimpan...';
 
-            closeModal();
-            renderTable();
+            const payload = {
+                action: editId ? "update" : "create",
+                id: editId,
+                name: name,
+                email: email,
+                role: role,
+                status: status
+            };
+
+            try {
+                const res = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(payload)
+                });
+                const result = await res.json();
+                
+                if (result.status === 'success') {
+                    showToast(result.message);
+                    closeModal();
+                    fetchData();
+                } else {
+                    showToast(result.message || 'Gagal menyimpan data', true);
+                }
+            } catch (err) {
+                console.error(err);
+                showToast('Terjadi kesalahan saat menghubungkan ke server', true);
+            } finally {
+                submitBtnText.innerText = 'Simpan Data';
+            }
         }
 
         // Delete Handler
-        function deleteData(id) {
-            if (confirm('Apakah Anda yakin ingin menghapus baris data ini?')) {
-                mockData = mockData.filter(d => d.id !== id);
-                renderTable();
-                showToast('Data berhasil dihapus');
+        async function deleteData(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus baris data ini dari Google Sheets?')) {
+                showLoading(true);
+                try {
+                    const res = await fetch(APPS_SCRIPT_URL, {
+                        method: 'POST',
+                        body: JSON.stringify({ action: 'delete', id: id })
+                    });
+                    const result = await res.json();
+                    if (result.status === 'success') {
+                        showToast(result.message);
+                        fetchData();
+                    } else {
+                        showToast(result.message || 'Gagal menghapus data', true);
+                    }
+                } catch (err) {
+                    console.error(err);
+                    showToast('Gagal terhubung ke Google Sheets', true);
+                } finally {
+                    showLoading(false);
+                }
             }
         }
 
+        // Loading Overlay Helper
+        function showLoading(show) {
+            const overlay = document.getElementById('loadingOverlay');
+            if (show) overlay.classList.remove('hidden');
+            else overlay.classList.add('hidden');
+        }
+
         // Toast Helper
-        function showToast(msg) {
+        function showToast(msg, isError = false) {
             const toast = document.getElementById('toast');
+            const toastIcon = document.getElementById('toastIcon');
+            
             document.getElementById('toastMessage').innerText = msg;
+            
+            if (isError) {
+                toastIcon.className = "fa-solid fa-circle-xmark text-rose-500 text-lg";
+            } else {
+                toastIcon.className = "fa-solid fa-circle-check text-emerald-400 dark:text-emerald-600 text-lg";
+            }
+
             toast.classList.remove('hidden');
             toast.classList.add('flex');
 
@@ -457,7 +452,7 @@
 
         // Initialize App on Page Load
         window.onload = function() {
-            renderTable();
+            fetchData();
         };
     </script>
 </body>
