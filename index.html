@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SheetFlow - Aplikasi CRUD Google Sheets Web</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for table */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #9ca3af;
+            border-radius: 9999px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #4b5563;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-40 w-full backdrop-blur border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-brand-500/30">
+                    <i class="fa-solid fa-table"></i>
+                </div>
+                <span class="font-bold text-xl tracking-tight">Sheet<span class="text-brand-500">Flow</span></span>
+            </div>
+
+            <!-- Navigation Links & Dark Mode Toggle -->
+            <div class="flex items-center space-x-4">
+                <nav class="hidden md:flex space-x-6 text-sm font-medium">
+                    <a href="#fitur" class="hover:text-brand-500 transition-colors">Fitur</a>
+                    <a href="#demo" class="hover:text-brand-500 transition-colors">Demo Interactive</a>
+                    <a href="#panduan" class="hover:text-brand-500 transition-colors">Panduan Setup</a>
+                </nav>
+                <button id="themeToggleBtn" onclick="toggleDarkMode()" class="p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" title="Ubah Tema">
+                    <i id="themeIcon" class="fa-solid fa-sun text-amber-500"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- Hero Section -->
+        <section class="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
+            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand-50 dark:bg-brand-900/30 border border-brand-200 dark:border-brand-800/50 text-brand-700 dark:text-brand-300 text-xs sm:text-sm font-medium mb-6">
+                <span class="flex h-2 w-2 rounded-full bg-brand-500 animate-ping"></span>
+                <span>Hosted on GitHub Pages</span>
+            </div>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight max-w-4xl mx-auto leading-tight">
+                Kelola Data <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-emerald-400">Google Sheets</span> Langsung dari Web App
+            </h1>
+            <p class="mt-6 text-lg sm:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                Solusi modern tanpa backend berat. Lakukan Create, Read, Update, dan Delete data Spreadsheet dengan cepat, aman, dan responsif.
+            </p>
+            <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#demo" class="px-6 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold shadow-lg shadow-brand-600/30 transition-all transform hover:-translate-y-0.5">
+                    <i class="fa-solid fa-play mr-2"></i>Coba Simulator CRUD
+                </a>
+                <a href="#panduan" class="px-6 py-3.5 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold transition-all">
+                    <i class="fa-solid fa-book mr-2"></i>Cara Integrasi API
+                </a>
+            </div>
+        </section>
+
+        <!-- Fitur Utama -->
+        <section id="fitur" class="py-12 bg-slate-100/50 dark:bg-slate-800/30 border-y border-slate-200 dark:border-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-2xl sm:text-3xl font-bold">Keunggulan Web App</h2>
+                    <p class="text-slate-600 dark:text-slate-400 mt-2">Mengapa mengintegrasikan Google Sheets dengan web app?</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Feature 1 -->
+                    <div class="p-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2">Real-time Sync</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm">Data yang ditambahkan atau diperbarui langsung tersinkronisasi ke Google Sheets spreadsheet kamu.</p>
+                    </div>
+                    <!-- Feature 2 -->
+                    <div class="p-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <div class="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-mobile-screen"></i>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2">Desain Responsif</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm">Tampilan yang dioptimalkan untuk perangkat mobile, tablet, hingga desktop tanpa gangguan layout.</p>
+                    </div>
+                    <!-- Feature 3 -->
+                    <div class="p-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <div class="w-12 h-12 rounded-xl bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-lock"></i>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2">Aman & Tanpa Server</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm">Dihosting gratis di GitHub Pages. Tanpa perlu sewa server backend bulanan.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive CRUD Demo App Section -->
+        <section id="demo" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                <div>
+                    <div class="inline-flex items-center space-x-2 text-xs font-semibold uppercase tracking-wider text-brand-600 dark:text-brand-400 mb-1">
+                        <i class="fa-solid fa-flask"></i>
+                        <span>Live Demo Simulator</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-bold">Aplikasi CRUD Spreadsheet</h2>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">Uji coba interaksi tabel data dibawah ini (Create, Read, Update, Delete).</p>
+                </div>
+                
+                <div class="flex items-center space-x-3">
+                    <span id="connectionStatus" class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-300">
+                        <span class="w-2 h-2 mr-1.5 bg-emerald-500 rounded-full animate-pulse"></span> Mode Demo Terhubung
+                    </span>
+                    <button onclick="openAddModal()" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold rounded-lg shadow transition-colors flex items-center space-x-2">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Tambah Data</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Controls (Search & Filter) -->
+            <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 mb-6 flex flex-col sm:flex-row gap-4 justify-between items-center shadow-sm">
+                <div class="relative w-full sm:w-80">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="searchInput" oninput="renderTable()" placeholder="Cari nama atau email..." class="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                </div>
+                <div class="flex items-center space-x-3 w-full sm:w-auto justify-end">
+                    <label class="text-xs text-slate-500 dark:text-slate-400 font-medium">Status:</label>
+                    <select id="statusFilter" onchange="renderTable()" class="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        <option value="ALL">Semua Status</option>
+                        <option value="Aktif">Aktif</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Nonaktif">Nonaktif</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Table Container -->
+            <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-slate-50 dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 uppercase text-[11px] tracking-wider">
+                            <tr>
+                                <th class="py-3.5 px-4 font-semibold">ID</th>
+                                <th class="py-3.5 px-4 font-semibold">Nama Lengkap</th>
+                                <th class="py-3.5 px-4 font-semibold">Email</th>
+                                <th class="py-3.5 px-4 font-semibold">Peran</th>
+                                <th class="py-3.5 px-4 font-semibold">Status</th>
+                                <th class="py-3.5 px-4 font-semibold text-right">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody" class="divide-y divide-slate-200 dark:divide-slate-700">
+                            <!-- JS Dynamic Content -->
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Empty State -->
+                <div id="emptyState" class="hidden py-12 text-center text-slate-500 dark:text-slate-400">
+                    <i class="fa-solid fa-folder-open text-4xl mb-3 opacity-50"></i>
+                    <p class="text-base font-medium">Tidak ada data ditemukan</p>
+                    <p class="text-xs mt-1">Coba kata kunci pencarian lain atau tambah data baru.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Integration Guide Section -->
+        <section id="panduan" class="py-16 bg-slate-100/50 dark:bg-slate-800/30 border-t border-slate-200 dark:border-slate-800">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl sm:text-3xl font-bold text-center mb-8">Cara Menghubungkan ke Google Sheets API</h2>
+                
+                <div class="space-y-6">
+                    <div class="flex items-start space-x-4 p-5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                        <div class="w-8 h-8 rounded-full bg-brand-100 dark:bg-brand-900/50 text-brand-600 dark:text-brand-400 flex items-center justify-center font-bold text-sm shrink-0">1</div>
+                        <div>
+                            <h3 class="font-semibold text-base mb-1">Buat Google Apps Script</h3>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm">Buka Google Sheet kamu, klik <strong>Extensions > Apps Script</strong>. Tuliskan kode fungsi `doGet()` dan `doPost()` untuk mengolah data JSON.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-4 p-5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                        <div class="w-8 h-8 rounded-full bg-brand-100 dark:bg-brand-900/50 text-brand-600 dark:text-brand-400 flex items-center justify-center font-bold text-sm shrink-0">2</div>
+                        <div>
+                            <h3 class="font-semibold text-base mb-1">Deploy sebagai Web App</h3>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm">Di Apps Script, klik <strong>Deploy > New Deployment</strong>. Pilih jenis <em>Web app</em> dan atur akses "Who has access" menjadi <strong>Anyone</strong>.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-4 p-5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                        <div class="w-8 h-8 rounded-full bg-brand-100 dark:bg-brand-900/50 text-brand-600 dark:text-brand-400 flex items-center justify-center font-bold text-sm shrink-0">3</div>
+                        <div>
+                            <h3 class="font-semibold text-base mb-1">Panggil Endpoint URL via `fetch()`</h3>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm">Gunakan Web App URL yang diberikan Google untuk dipanggil melalui JavaScript di file HTML ini.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
+            <p>&copy; 2026 SheetFlow. Di-host di GitHub Pages secara Gratis.</p>
+            <div class="flex space-x-4">
+                <a href="https://github.com" target="_blank" class="hover:text-slate-800 dark:hover:text-slate-200"><i class="fa-brands fa-github text-base"></i> GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Add/Edit Data -->
+    <div id="dataModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-50 items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full border border-slate-200 dark:border-slate-700 shadow-xl overflow-hidden transform transition-all">
+            <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+                <h3 id="modalTitle" class="font-bold text-lg">Tambah Data Baru</h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <form id="dataForm" onsubmit="handleFormSubmit(event)" class="p-6 space-y-4">
+                <input type="hidden" id="editId">
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-500 dark:text-slate-400 mb-1">Nama Lengkap</label>
+                    <input type="text" id="inputName" required placeholder="Contoh: Budi Santoso" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-500 dark:text-slate-400 mb-1">Email</label>
+                    <input type="email" id="inputEmail" required placeholder="budi@example.com" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-500 dark:text-slate-400 mb-1">Peran</label>
+                        <select id="inputRole" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                            <option value="Admin">Admin</option>
+                            <option value="Editor">Editor</option>
+                            <option value="Viewer">Viewer</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-500 dark:text-slate-400 mb-1">Status</label>
+                        <select id="inputStatus" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                            <option value="Aktif">Aktif</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Nonaktif">Nonaktif</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="pt-4 flex justify-end space-x-3">
+                    <button type="button" onclick="closeModal()" class="px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-700">Batal</button>
+                    <button type="submit" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg text-sm font-semibold shadow">Simpan Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 px-4 py-3 rounded-xl shadow-lg border border-slate-700 dark:border-slate-200 hidden items-center space-x-3 z-50 text-sm">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 dark:text-emerald-600 text-lg"></i>
+        <span id="toastMessage">Pesan notifikasi</span>
+    </div>
+
+    <script>
+        // Data Mock Initial State
+        let mockData = [
+            { id: "S-101", name: "Ahmad Rizky", email: "ahmad@example.com", role: "Admin", status: "Aktif" },
+            { id: "S-102", name: "Siti Rahma", email: "siti@example.com", role: "Editor", status: "Aktif" },
+            { id: "S-103", name: "Dewi Lestari", email: "dewi@example.com", role: "Viewer", status: "Pending" },
+            { id: "S-104", name: "Budi Setiawan", email: "budi@example.com", role: "Editor", status: "Nonaktif" }
+        ];
+
+        // Dark / Light Theme Logic
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const themeIcon = document.getElementById('themeIcon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                themeIcon.className = 'fa-solid fa-moon text-slate-600';
+            } else {
+                html.classList.add('dark');
+                themeIcon.className = 'fa-solid fa-sun text-amber-500';
+            }
+        }
+
+        // Render Table Data
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+            const emptyState = document.getElementById('emptyState');
+            const searchVal = document.getElementById('searchInput').value.toLowerCase();
+            const statusVal = document.getElementById('statusFilter').value;
+
+            tbody.innerHTML = '';
+
+            const filtered = mockData.filter(item => {
+                const matchesSearch = item.name.toLowerCase().includes(searchVal) || item.email.toLowerCase().includes(searchVal);
+                const matchesStatus = statusVal === 'ALL' || item.status === statusVal;
+                return matchesSearch && matchesStatus;
+            });
+
+            if (filtered.length === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+                filtered.forEach(item => {
+                    let badgeClass = '';
+                    if (item.status === 'Aktif') badgeClass = 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400';
+                    else if (item.status === 'Pending') badgeClass = 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400';
+                    else badgeClass = 'bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400';
+
+                    const tr = document.createElement('tr');
+                    tr.className = 'hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors';
+                    tr.innerHTML = `
+                        <td class="py-3.5 px-4 font-mono text-xs text-slate-500">${item.id}</td>
+                        <td class="py-3.5 px-4 font-semibold text-slate-900 dark:text-slate-100">${item.name}</td>
+                        <td class="py-3.5 px-4 text-slate-600 dark:text-slate-400">${item.email}</td>
+                        <td class="py-3.5 px-4">${item.role}</td>
+                        <td class="py-3.5 px-4">
+                            <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold ${badgeClass}">
+                                ${item.status}
+                            </span>
+                        </td>
+                        <td class="py-3.5 px-4 text-right space-x-2">
+                            <button onclick="openEditModal('${item.id}')" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 p-1">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button onclick="deleteData('${item.id}')" class="text-rose-600 dark:text-rose-400 hover:text-rose-800 p-1">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+        }
+
+        // Modal Controls
+        function openAddModal() {
+            document.getElementById('modalTitle').innerText = 'Tambah Data Baru';
+            document.getElementById('editId').value = '';
+            document.getElementById('inputName').value = '';
+            document.getElementById('inputEmail').value = '';
+            document.getElementById('inputRole').value = 'Admin';
+            document.getElementById('inputStatus').value = 'Aktif';
+            
+            const modal = document.getElementById('dataModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function openEditModal(id) {
+            const item = mockData.find(d => d.id === id);
+            if (!item) return;
+
+            document.getElementById('modalTitle').innerText = 'Edit Data';
+            document.getElementById('editId').value = item.id;
+            document.getElementById('inputName').value = item.name;
+            document.getElementById('inputEmail').value = item.email;
+            document.getElementById('inputRole').value = item.role;
+            document.getElementById('inputStatus').value = item.status;
+
+            const modal = document.getElementById('dataModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('dataModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Save & Edit Form Handler
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const editId = document.getElementById('editId').value;
+            const name = document.getElementById('inputName').value;
+            const email = document.getElementById('inputEmail').value;
+            const role = document.getElementById('inputRole').value;
+            const status = document.getElementById('inputStatus').value;
+
+            if (editId) {
+                // Update existing item
+                const index = mockData.findIndex(d => d.id === editId);
+                if (index !== -1) {
+                    mockData[index] = { id: editId, name, email, role, status };
+                    showToast('Data berhasil diperbarui!');
+                }
+            } else {
+                // Add new item
+                const newId = 'S-' + (Math.floor(Math.random() * 800) + 100);
+                mockData.unshift({ id: newId, name, email, role, status });
+                showToast('Data baru berhasil ditambahkan!');
+            }
+
+            closeModal();
+            renderTable();
+        }
+
+        // Delete Handler
+        function deleteData(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus baris data ini?')) {
+                mockData = mockData.filter(d => d.id !== id);
+                renderTable();
+                showToast('Data berhasil dihapus');
+            }
+        }
+
+        // Toast Helper
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').innerText = msg;
+            toast.classList.remove('hidden');
+            toast.classList.add('flex');
+
+            setTimeout(() => {
+                toast.classList.add('hidden');
+                toast.classList.remove('flex');
+            }, 3000);
+        }
+
+        // Initialize App on Page Load
+        window.onload = function() {
+            renderTable();
+        };
+    </script>
+</body>
+</html>
