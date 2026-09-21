@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SheetFlow - Aplikasi CRUD Google Sheets Web</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -24,108 +23,65 @@
             }
         }
     </script>
-    <!-- Font Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #9ca3af;
-            border-radius: 9999px;
-        }
-        .dark ::-webkit-scrollbar-thumb {
-            background: #4b5563;
-        }
+        body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col">
 
-    <!-- Navigation Bar -->
+    <!-- Header Navigation -->
     <header class="sticky top-0 z-40 w-full backdrop-blur border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-brand-500/30">
+                <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white font-bold text-xl shadow-lg">
                     <i class="fa-solid fa-table"></i>
                 </div>
                 <span class="font-bold text-xl tracking-tight">Sheet<span class="text-brand-500">Flow</span></span>
             </div>
 
-            <!-- Navigation Links & Dark Mode Toggle -->
-            <div class="flex items-center space-x-4">
-                <nav class="hidden md:flex space-x-6 text-sm font-medium">
-                    <a href="#fitur" class="hover:text-brand-500 transition-colors">Fitur</a>
-                    <a href="#demo" class="hover:text-brand-500 transition-colors">Aplikasi CRUD</a>
-                    <a href="#panduan" class="hover:text-brand-500 transition-colors">Panduan Setup</a>
-                </nav>
-                <button id="themeToggleBtn" onclick="toggleDarkMode()" class="p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" title="Ubah Tema">
+            <div class="flex items-center space-x-3">
+                <!-- Auth Info & Logout Button -->
+                <div id="userInfo" class="hidden items-center space-x-3">
+                    <span id="userDisplayName" class="text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300"></span>
+                    <button onclick="handleLogout()" class="px-3 py-1.5 bg-rose-600/10 hover:bg-rose-600/20 text-rose-500 rounded-lg text-xs font-semibold transition-colors">
+                        <i class="fa-solid fa-right-from-bracket mr-1"></i>Logout
+                    </button>
+                </div>
+                <button id="themeToggleBtn" onclick="toggleDarkMode()" class="p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800">
                     <i id="themeIcon" class="fa-solid fa-sun text-amber-500"></i>
                 </button>
             </div>
         </div>
     </header>
 
-    <main class="flex-grow">
-        <!-- Hero Section -->
-        <section class="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
-            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand-50 dark:bg-brand-900/30 border border-brand-200 dark:border-brand-800/50 text-brand-700 dark:text-brand-300 text-xs sm:text-sm font-medium mb-6">
-                <span class="flex h-2 w-2 rounded-full bg-brand-500 animate-ping"></span>
-                <span>Terhubung ke Google Sheets API</span>
-            </div>
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight max-w-4xl mx-auto leading-tight">
-                Kelola Data <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-emerald-400">Google Sheets</span> Langsung dari Web App
-            </h1>
-            <p class="mt-6 text-lg sm:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-                Solusi modern tanpa backend berat. Lakukan Create, Read, Update, dan Delete data Spreadsheet secara permanen.
-            </p>
-            <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
-                <a href="#demo" class="px-6 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold shadow-lg shadow-brand-600/30 transition-all transform hover:-translate-y-0.5">
-                    <i class="fa-solid fa-table mr-2"></i>Buka Tabel Data
-                </a>
-            </div>
-        </section>
-
-        <!-- Interactive CRUD Demo App Section -->
-        <section id="demo" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <!-- Main Content App -->
+    <main id="appContent" class="flex-grow hidden">
+        <section id="demo" class="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
                 <div>
-                    <div class="inline-flex items-center space-x-2 text-xs font-semibold uppercase tracking-wider text-brand-600 dark:text-brand-400 mb-1">
-                        <i class="fa-solid fa-database"></i>
-                        <span>Live Database Integration</span>
-                    </div>
                     <h2 class="text-2xl sm:text-3xl font-bold">Aplikasi CRUD Spreadsheet</h2>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">Data di bawah ini disinkronkan secara langsung dengan Google Sheets.</p>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">Data terhubung langsung dengan Google Sheets.</p>
                 </div>
-                
                 <div class="flex items-center space-x-3">
-                    <button onclick="fetchData()" class="p-2 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 rounded-lg text-sm font-medium transition-colors" title="Refresh Data">
+                    <button onclick="fetchData()" class="p-2 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 rounded-lg text-sm">
                         <i class="fa-solid fa-rotate-right"></i>
                     </button>
-                    <button onclick="openAddModal()" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold rounded-lg shadow transition-colors flex items-center space-x-2">
-                        <i class="fa-solid fa-plus"></i>
-                        <span>Tambah Data</span>
+                    <button onclick="openAddModal()" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold rounded-lg shadow flex items-center space-x-2">
+                        <i class="fa-solid fa-plus"></i><span>Tambah Data</span>
                     </button>
                 </div>
             </div>
 
-            <!-- Controls (Search & Filter) -->
+            <!-- Controls -->
             <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 mb-6 flex flex-col sm:flex-row gap-4 justify-between items-center shadow-sm">
                 <div class="relative w-full sm:w-80">
-                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
-                    <input type="text" id="searchInput" oninput="renderTable()" placeholder="Cari nama atau email..." class="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="searchInput" oninput="renderTable()" placeholder="Cari nama atau email..." class="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-sm">
                 </div>
                 <div class="flex items-center space-x-3 w-full sm:w-auto justify-end">
-                    <label class="text-xs text-slate-500 dark:text-slate-400 font-medium">Status:</label>
-                    <select id="statusFilter" onchange="renderTable()" class="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    <select id="statusFilter" onchange="renderTable()" class="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-sm py-2 px-3">
                         <option value="ALL">Semua Status</option>
                         <option value="Aktif">Aktif</option>
                         <option value="Pending">Pending</option>
@@ -134,80 +90,86 @@
                 </div>
             </div>
 
-            <!-- Table Container -->
+            <!-- Table -->
             <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden relative">
-                
-                <!-- Loading Overlay -->
                 <div id="loadingOverlay" class="absolute inset-0 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
                     <i class="fa-solid fa-spinner animate-spin text-3xl text-brand-600 mb-2"></i>
-                    <span class="text-sm font-medium text-slate-600 dark:text-slate-300">Memuat Data dari Google Sheets...</span>
+                    <span class="text-sm font-medium">Memuat Data...</span>
                 </div>
-
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-sm">
-                        <thead class="bg-slate-50 dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 uppercase text-[11px] tracking-wider">
+                        <thead class="bg-slate-50 dark:bg-slate-900/50 text-slate-500 uppercase text-[11px]">
                             <tr>
-                                <th class="py-3.5 px-4 font-semibold">ID</th>
-                                <th class="py-3.5 px-4 font-semibold">Nama Lengkap</th>
-                                <th class="py-3.5 px-4 font-semibold">Email</th>
-                                <th class="py-3.5 px-4 font-semibold">Peran</th>
-                                <th class="py-3.5 px-4 font-semibold">Status</th>
-                                <th class="py-3.5 px-4 font-semibold text-right">Aksi</th>
+                                <th class="py-3.5 px-4">ID</th>
+                                <th class="py-3.5 px-4">Nama Lengkap</th>
+                                <th class="py-3.5 px-4">Email</th>
+                                <th class="py-3.5 px-4">Peran</th>
+                                <th class="py-3.5 px-4">Status</th>
+                                <th class="py-3.5 px-4 text-right">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody id="tableBody" class="divide-y divide-slate-200 dark:divide-slate-700">
-                            <!-- JS Dynamic Content -->
-                        </tbody>
+                        <tbody id="tableBody" class="divide-y divide-slate-200 dark:divide-slate-700"></tbody>
                     </table>
-                </div>
-                <!-- Empty State -->
-                <div id="emptyState" class="hidden py-12 text-center text-slate-500 dark:text-slate-400">
-                    <i class="fa-solid fa-folder-open text-4xl mb-3 opacity-50"></i>
-                    <p class="text-base font-medium">Tidak ada data ditemukan</p>
-                    <p class="text-xs mt-1">Coba kata kunci pencarian lain atau tambah data baru.</p>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
-            <p>&copy; 2026 SheetFlow. Di-host di GitHub Pages secara Gratis.</p>
-        </div>
-    </footer>
-
-    <!-- Modal Add/Edit Data -->
-    <div id="dataModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-50 items-center justify-center p-4">
-        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full border border-slate-200 dark:border-slate-700 shadow-xl overflow-hidden transform transition-all">
-            <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
-                <h3 id="modalTitle" class="font-bold text-lg">Tambah Data Baru</h3>
-                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
-                    <i class="fa-solid fa-xmark text-lg"></i>
+    <!-- Modal Login (Overlay) -->
+    <div id="loginModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md flex items-center justify-center z-50 p-4">
+        <div class="bg-white dark:bg-slate-800 max-w-md w-full rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-2xl">
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-brand-600 text-white rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl font-bold shadow-lg shadow-brand-500/30">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <h2 class="text-2xl font-bold">Akses Terbatas</h2>
+                <p class="text-slate-500 text-xs mt-1">Silakan login dengan akun yang terdaftar di Google Sheet.</p>
+            </div>
+            <form onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Email</label>
+                    <input type="email" id="loginEmail" required placeholder="nama@email.com" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Password</label>
+                    <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-sm">
+                </div>
+                <button type="submit" id="loginBtn" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-lg text-sm transition-all shadow-lg shadow-brand-600/30">
+                    <span>Masuk Aplikasi</span>
                 </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Form CRUD -->
+    <div id="dataModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-50 items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full border border-slate-200 dark:border-slate-700 shadow-xl overflow-hidden">
+            <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+                <h3 id="modalTitle" class="font-bold text-lg">Tambah Data</h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-200"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form id="dataForm" onsubmit="handleFormSubmit(event)" class="p-6 space-y-4">
                 <input type="hidden" id="editId">
                 <div>
-                    <label class="block text-xs font-semibold uppercase text-slate-500 dark:text-slate-400 mb-1">Nama Lengkap</label>
-                    <input type="text" id="inputName" required placeholder="Contoh: Budi Santoso" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Nama Lengkap</label>
+                    <input type="text" id="inputName" required class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-sm">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold uppercase text-slate-500 dark:text-slate-400 mb-1">Email</label>
-                    <input type="email" id="inputEmail" required placeholder="budi@example.com" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Email</label>
+                    <input type="email" id="inputEmail" required class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-sm">
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-semibold uppercase text-slate-500 dark:text-slate-400 mb-1">Peran</label>
-                        <select id="inputRole" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Peran</label>
+                        <select id="inputRole" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-sm">
                             <option value="Admin">Admin</option>
                             <option value="Editor">Editor</option>
                             <option value="Viewer">Viewer</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold uppercase text-slate-500 dark:text-slate-400 mb-1">Status</label>
-                        <select id="inputStatus" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Status</label>
+                        <select id="inputStatus" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-sm">
                             <option value="Aktif">Aktif</option>
                             <option value="Pending">Pending</option>
                             <option value="Nonaktif">Nonaktif</option>
@@ -215,41 +177,76 @@
                     </div>
                 </div>
                 <div class="pt-4 flex justify-end space-x-3">
-                    <button type="button" onclick="closeModal()" class="px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-700">Batal</button>
-                    <button type="submit" id="submitBtn" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg text-sm font-semibold shadow flex items-center space-x-2">
-                        <span id="submitBtnText">Simpan Data</span>
-                    </button>
+                    <button type="button" onclick="closeModal()" class="px-4 py-2 border rounded-lg text-sm">Batal</button>
+                    <button type="submit" id="submitBtn" class="px-4 py-2 bg-brand-600 text-white rounded-lg text-sm font-semibold">Simpan Data</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Notification Toast -->
-    <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 px-4 py-3 rounded-xl shadow-lg border border-slate-700 dark:border-slate-200 hidden items-center space-x-3 z-50 text-sm">
-        <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 dark:text-emerald-600 text-lg"></i>
-        <span id="toastMessage">Pesan notifikasi</span>
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-lg hidden items-center space-x-3 z-50 text-sm">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400"></i>
+        <span id="toastMessage"></span>
     </div>
 
     <script>
-        // URL Google Apps Script milikmu
         const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz8ekJkWZlBW0YDIjWbagXdz-CzQoK7YaFXREtuuU1qAkRHGjWeH8JgvTzEUkeGNnc/exec';
-
         let sheetData = [];
 
-        // Dark / Light Theme Logic
-        function toggleDarkMode() {
-            const html = document.documentElement;
-            const themeIcon = document.getElementById('themeIcon');
-            if (html.classList.contains('dark')) {
-                html.classList.remove('dark');
-                themeIcon.className = 'fa-solid fa-moon text-slate-600';
+        function checkAuth() {
+            const user = JSON.parse(localStorage.getItem('sheetflow_user'));
+            if (user) {
+                document.getElementById('loginModal').classList.add('hidden');
+                document.getElementById('appContent').classList.remove('hidden');
+                document.getElementById('userInfo').classList.remove('hidden');
+                document.getElementById('userInfo').classList.add('flex');
+                document.getElementById('userDisplayName').innerText = user.name;
+                fetchData();
             } else {
-                html.classList.add('dark');
-                themeIcon.className = 'fa-solid fa-sun text-amber-500';
+                document.getElementById('loginModal').classList.remove('hidden');
+                document.getElementById('appContent').classList.add('hidden');
+                document.getElementById('userInfo').classList.add('hidden');
             }
         }
 
-        // Fetch Data dari Google Sheets
+        async function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const loginBtn = document.getElementById('loginBtn');
+
+            loginBtn.innerText = 'Memverifikasi...';
+            loginBtn.disabled = true;
+
+            try {
+                const res = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'login', email: email, password: password })
+                });
+                const result = await res.json();
+
+                if (result.status === 'success') {
+                    localStorage.setItem('sheetflow_user', JSON.stringify(result.user));
+                    showToast('Login berhasil!');
+                    checkAuth();
+                } else {
+                    showToast(result.message, true);
+                }
+            } catch (err) {
+                showToast('Gagal terhubung ke server', true);
+            } finally {
+                loginBtn.innerText = 'Masuk Aplikasi';
+                loginBtn.disabled = false;
+            }
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('sheetflow_user');
+            showToast('Anda telah logout');
+            checkAuth();
+        }
+
         async function fetchData() {
             showLoading(true);
             try {
@@ -257,203 +254,124 @@
                 sheetData = await response.json();
                 renderTable();
             } catch (error) {
-                console.error("Error loading data:", error);
-                showToast("Gagal mengambil data dari Google Sheets", true);
+                showToast("Gagal mengambil data", true);
             } finally {
                 showLoading(false);
             }
         }
 
-        // Render Table Data
         function renderTable() {
             const tbody = document.getElementById('tableBody');
-            const emptyState = document.getElementById('emptyState');
             const searchVal = document.getElementById('searchInput').value.toLowerCase();
             const statusVal = document.getElementById('statusFilter').value;
-
             tbody.innerHTML = '';
 
             const filtered = sheetData.filter(item => {
                 const name = item.name ? item.name.toString().toLowerCase() : '';
                 const email = item.email ? item.email.toString().toLowerCase() : '';
-                const matchesSearch = name.includes(searchVal) || email.includes(searchVal);
-                const matchesStatus = statusVal === 'ALL' || item.status === statusVal;
-                return matchesSearch && matchesStatus;
+                return (name.includes(searchVal) || email.includes(searchVal)) && (statusVal === 'ALL' || item.status === statusVal);
             });
 
-            if (filtered.length === 0) {
-                emptyState.classList.remove('hidden');
-            } else {
-                emptyState.classList.add('hidden');
-                filtered.forEach(item => {
-                    let badgeClass = '';
-                    if (item.status === 'Aktif') badgeClass = 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400';
-                    else if (item.status === 'Pending') badgeClass = 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400';
-                    else badgeClass = 'bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400';
+            filtered.forEach(item => {
+                let badgeClass = item.status === 'Aktif' ? 'bg-emerald-100 text-emerald-700' : (item.status === 'Pending' ? 'bg-amber-100 text-amber-700' : 'bg-rose-100 text-rose-700');
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="py-3.5 px-4 font-mono text-xs">${item.id || '-'}</td>
+                    <td class="py-3.5 px-4 font-semibold">${item.name || ''}</td>
+                    <td class="py-3.5 px-4">${item.email || ''}</td>
+                    <td class="py-3.5 px-4">${item.role || ''}</td>
+                    <td class="py-3.5 px-4"><span class="px-2.5 py-1 rounded-full text-[11px] font-semibold ${badgeClass}">${item.status || ''}</span></td>
+                    <td class="py-3.5 px-4 text-right space-x-2">
+                        <button onclick="openEditModal('${item.id}')" class="text-blue-500"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button onclick="deleteData('${item.id}')" class="text-rose-500"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
 
-                    const tr = document.createElement('tr');
-                    tr.className = 'hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors';
-                    tr.innerHTML = `
-                        <td class="py-3.5 px-4 font-mono text-xs text-slate-500">${item.id || '-'}</td>
-                        <td class="py-3.5 px-4 font-semibold text-slate-900 dark:text-slate-100">${item.name || ''}</td>
-                        <td class="py-3.5 px-4 text-slate-600 dark:text-slate-400">${item.email || ''}</td>
-                        <td class="py-3.5 px-4">${item.role || ''}</td>
-                        <td class="py-3.5 px-4">
-                            <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold ${badgeClass}">
-                                ${item.status || ''}
-                            </span>
-                        </td>
-                        <td class="py-3.5 px-4 text-right space-x-2">
-                            <button onclick="openEditModal('${item.id}')" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 p-1">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button onclick="deleteData('${item.id}')" class="text-rose-600 dark:text-rose-400 hover:text-rose-800 p-1">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        </td>
-                    `;
-                    tbody.appendChild(tr);
-                });
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            const payload = {
+                action: document.getElementById('editId').value ? "update" : "create",
+                id: document.getElementById('editId').value,
+                name: document.getElementById('inputName').value,
+                email: document.getElementById('inputEmail').value,
+                role: document.getElementById('inputRole').value,
+                status: document.getElementById('inputStatus').value
+            };
+
+            try {
+                const res = await fetch(APPS_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    showToast(result.message);
+                    closeModal();
+                    fetchData();
+                }
+            } catch (err) {
+                showToast('Gagal menyimpan data', true);
             }
         }
 
-        // Modal Controls
+        async function deleteData(id) {
+            if (confirm('Hapus baris ini?')) {
+                showLoading(true);
+                try {
+                    const res = await fetch(APPS_SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'delete', id: id }) });
+                    const result = await res.json();
+                    if (result.status === 'success') {
+                        showToast(result.message);
+                        fetchData();
+                    }
+                } catch (err) { showToast('Gagal menghapus data', true); }
+                finally { showLoading(false); }
+            }
+        }
+
         function openAddModal() {
             document.getElementById('modalTitle').innerText = 'Tambah Data Baru';
             document.getElementById('editId').value = '';
-            document.getElementById('inputName').value = '';
-            document.getElementById('inputEmail').value = '';
-            document.getElementById('inputRole').value = 'Admin';
-            document.getElementById('inputStatus').value = 'Aktif';
-            
-            const modal = document.getElementById('dataModal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
+            document.getElementById('dataForm').reset();
+            document.getElementById('dataModal').classList.remove('hidden');
+            document.getElementById('dataModal').classList.add('flex');
         }
 
         function openEditModal(id) {
             const item = sheetData.find(d => String(d.id) === String(id));
             if (!item) return;
-
             document.getElementById('modalTitle').innerText = 'Edit Data';
             document.getElementById('editId').value = item.id;
             document.getElementById('inputName').value = item.name;
             document.getElementById('inputEmail').value = item.email;
             document.getElementById('inputRole').value = item.role;
             document.getElementById('inputStatus').value = item.status;
-
-            const modal = document.getElementById('dataModal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
+            document.getElementById('dataModal').classList.remove('hidden');
+            document.getElementById('dataModal').classList.add('flex');
         }
 
         function closeModal() {
-            const modal = document.getElementById('dataModal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
+            document.getElementById('dataModal').classList.add('hidden');
+            document.getElementById('dataModal').classList.remove('flex');
         }
 
-        // Save & Edit Form Handler (POST ke Google Apps Script)
-        async function handleFormSubmit(e) {
-            e.preventDefault();
-            const editId = document.getElementById('editId').value;
-            const name = document.getElementById('inputName').value;
-            const email = document.getElementById('inputEmail').value;
-            const role = document.getElementById('inputRole').value;
-            const status = document.getElementById('inputStatus').value;
-
-            const submitBtnText = document.getElementById('submitBtnText');
-            submitBtnText.innerText = 'Menyimpan...';
-
-            const payload = {
-                action: editId ? "update" : "create",
-                id: editId,
-                name: name,
-                email: email,
-                role: role,
-                status: status
-            };
-
-            try {
-                const res = await fetch(APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    body: JSON.stringify(payload)
-                });
-                const result = await res.json();
-                
-                if (result.status === 'success') {
-                    showToast(result.message);
-                    closeModal();
-                    fetchData();
-                } else {
-                    showToast(result.message || 'Gagal menyimpan data', true);
-                }
-            } catch (err) {
-                console.error(err);
-                showToast('Terjadi kesalahan saat menghubungkan ke server', true);
-            } finally {
-                submitBtnText.innerText = 'Simpan Data';
-            }
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
         }
 
-        // Delete Handler
-        async function deleteData(id) {
-            if (confirm('Apakah Anda yakin ingin menghapus baris data ini dari Google Sheets?')) {
-                showLoading(true);
-                try {
-                    const res = await fetch(APPS_SCRIPT_URL, {
-                        method: 'POST',
-                        body: JSON.stringify({ action: 'delete', id: id })
-                    });
-                    const result = await res.json();
-                    if (result.status === 'success') {
-                        showToast(result.message);
-                        fetchData();
-                    } else {
-                        showToast(result.message || 'Gagal menghapus data', true);
-                    }
-                } catch (err) {
-                    console.error(err);
-                    showToast('Gagal terhubung ke Google Sheets', true);
-                } finally {
-                    showLoading(false);
-                }
-            }
-        }
-
-        // Loading Overlay Helper
         function showLoading(show) {
-            const overlay = document.getElementById('loadingOverlay');
-            if (show) overlay.classList.remove('hidden');
-            else overlay.classList.add('hidden');
+            document.getElementById('loadingOverlay').classList.toggle('hidden', !show);
         }
 
-        // Toast Helper
         function showToast(msg, isError = false) {
             const toast = document.getElementById('toast');
-            const toastIcon = document.getElementById('toastIcon');
-            
             document.getElementById('toastMessage').innerText = msg;
-            
-            if (isError) {
-                toastIcon.className = "fa-solid fa-circle-xmark text-rose-500 text-lg";
-            } else {
-                toastIcon.className = "fa-solid fa-circle-check text-emerald-400 dark:text-emerald-600 text-lg";
-            }
-
             toast.classList.remove('hidden');
             toast.classList.add('flex');
-
-            setTimeout(() => {
-                toast.classList.add('hidden');
-                toast.classList.remove('flex');
-            }, 3000);
+            setTimeout(() => toast.classList.add('hidden'), 3000);
         }
 
-        // Initialize App on Page Load
-        window.onload = function() {
-            fetchData();
-        };
+        window.onload = checkAuth;
     </script>
 </body>
 </html>
