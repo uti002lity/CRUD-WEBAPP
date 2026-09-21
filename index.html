@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SheetFlow - Aplikasi CRUD Google Sheets Web</title>
+    <title>SheetFlow - Web App Secure CRUD</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -25,9 +25,7 @@
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-    </style>
+    <style>body { font-family: 'Inter', sans-serif; }</style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col">
 
@@ -36,13 +34,12 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-3">
                 <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white font-bold text-xl shadow-lg">
-                    <i class="fa-solid fa-table"></i>
+                    <i class="fa-solid fa-shield-halved"></i>
                 </div>
-                <span class="font-bold text-xl tracking-tight">Sheet<span class="text-brand-500">Flow</span></span>
+                <span class="font-bold text-xl tracking-tight">Sheet<span class="text-brand-500">Flow</span> <span class="text-xs px-2 py-0.5 rounded bg-brand-500/10 text-brand-500 border border-brand-500/20 font-mono">SECURE</span></span>
             </div>
 
             <div class="flex items-center space-x-3">
-                <!-- Auth Info & Logout Button -->
                 <div id="userInfo" class="hidden items-center space-x-3">
                     <span id="userDisplayName" class="text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300"></span>
                     <button onclick="handleLogout()" class="px-3 py-1.5 bg-rose-600/10 hover:bg-rose-600/20 text-rose-500 rounded-lg text-xs font-semibold transition-colors">
@@ -56,13 +53,13 @@
         </div>
     </header>
 
-    <!-- Main Content App -->
+    <!-- Main App Content -->
     <main id="appContent" class="flex-grow hidden">
         <section id="demo" class="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
                 <div>
                     <h2 class="text-2xl sm:text-3xl font-bold">Aplikasi CRUD Spreadsheet</h2>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">Data terhubung langsung dengan Google Sheets.</p>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">Data terenkripsi dan terverifikasi API Key.</p>
                 </div>
                 <div class="flex items-center space-x-3">
                     <button onclick="fetchData()" class="p-2 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 rounded-lg text-sm">
@@ -74,7 +71,7 @@
                 </div>
             </div>
 
-            <!-- Controls -->
+            <!-- Table Controls -->
             <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 mb-6 flex flex-col sm:flex-row gap-4 justify-between items-center shadow-sm">
                 <div class="relative w-full sm:w-80">
                     <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
@@ -90,11 +87,11 @@
                 </div>
             </div>
 
-            <!-- Table -->
+            <!-- Table Area -->
             <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden relative">
                 <div id="loadingOverlay" class="absolute inset-0 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
                     <i class="fa-solid fa-spinner animate-spin text-3xl text-brand-600 mb-2"></i>
-                    <span class="text-sm font-medium">Memuat Data...</span>
+                    <span class="text-sm font-medium">Memuat Data Secara Aman...</span>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-sm">
@@ -115,15 +112,15 @@
         </section>
     </main>
 
-    <!-- Modal Login (Overlay) -->
+    <!-- Modal Login -->
     <div id="loginModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md flex items-center justify-center z-50 p-4">
         <div class="bg-white dark:bg-slate-800 max-w-md w-full rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-2xl">
             <div class="text-center mb-6">
                 <div class="w-12 h-12 bg-brand-600 text-white rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl font-bold shadow-lg shadow-brand-500/30">
                     <i class="fa-solid fa-lock"></i>
                 </div>
-                <h2 class="text-2xl font-bold">Akses Terbatas</h2>
-                <p class="text-slate-500 text-xs mt-1">Silakan login dengan akun yang terdaftar di Google Sheet.</p>
+                <h2 class="text-2xl font-bold">Login Terproteksi</h2>
+                <p class="text-slate-500 text-xs mt-1">Sistem memerlukan autentikasi API Key terenkripsi.</p>
             </div>
             <form onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
@@ -192,11 +189,15 @@
 
     <script>
         const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz8ekJkWZlBW0YDIjWbagXdz-CzQoK7YaFXREtuuU1qAkRHGjWeH8JgvTzEUkeGNnc/exec';
+        
+        // SECRET API KEY (Harus sama persis dengan di Google Apps Script)
+        const SECRET_API_KEY = 'SheetFlow_SuperSecret_Key_2026';
+
         let sheetData = [];
 
         function checkAuth() {
             const user = JSON.parse(localStorage.getItem('sheetflow_user'));
-            if (user) {
+            if (user && user.token) {
                 document.getElementById('loginModal').classList.add('hidden');
                 document.getElementById('appContent').classList.remove('hidden');
                 document.getElementById('userInfo').classList.remove('hidden');
@@ -216,25 +217,30 @@
             const password = document.getElementById('loginPassword').value;
             const loginBtn = document.getElementById('loginBtn');
 
-            loginBtn.innerText = 'Memverifikasi...';
+            loginBtn.innerText = 'Memverifikasi Kunci...';
             loginBtn.disabled = true;
 
             try {
                 const res = await fetch(APPS_SCRIPT_URL, {
                     method: 'POST',
-                    body: JSON.stringify({ action: 'login', email: email, password: password })
+                    body: JSON.stringify({ 
+                        apiKey: SECRET_API_KEY, 
+                        action: 'login', 
+                        email: email, 
+                        password: password 
+                    })
                 });
                 const result = await res.json();
 
                 if (result.status === 'success') {
                     localStorage.setItem('sheetflow_user', JSON.stringify(result.user));
-                    showToast('Login berhasil!');
+                    showToast('Otentikasi Berhasil!');
                     checkAuth();
                 } else {
                     showToast(result.message, true);
                 }
             } catch (err) {
-                showToast('Gagal terhubung ke server', true);
+                showToast('Akses ditolak atau koneksi gagal', true);
             } finally {
                 loginBtn.innerText = 'Masuk Aplikasi';
                 loginBtn.disabled = false;
@@ -243,18 +249,26 @@
 
         function handleLogout() {
             localStorage.removeItem('sheetflow_user');
-            showToast('Anda telah logout');
+            showToast('Anda telah keluar');
             checkAuth();
         }
 
         async function fetchData() {
             showLoading(true);
             try {
-                const response = await fetch(APPS_SCRIPT_URL);
-                sheetData = await response.json();
+                // Mengirimkan API Key melalui parameter GET URL
+                const response = await fetch(`${APPS_SCRIPT_URL}?apiKey=${encodeURIComponent(SECRET_API_KEY)}`);
+                const result = await response.json();
+                
+                if (result.status === 'error') {
+                    showToast(result.message, true);
+                    return;
+                }
+                
+                sheetData = result;
                 renderTable();
             } catch (error) {
-                showToast("Gagal mengambil data", true);
+                showToast("Gagal mengambil data terproteksi", true);
             } finally {
                 showLoading(false);
             }
@@ -293,6 +307,7 @@
         async function handleFormSubmit(e) {
             e.preventDefault();
             const payload = {
+                apiKey: SECRET_API_KEY,
                 action: document.getElementById('editId').value ? "update" : "create",
                 id: document.getElementById('editId').value,
                 name: document.getElementById('inputName').value,
@@ -308,6 +323,8 @@
                     showToast(result.message);
                     closeModal();
                     fetchData();
+                } else {
+                    showToast(result.message, true);
                 }
             } catch (err) {
                 showToast('Gagal menyimpan data', true);
@@ -318,11 +335,16 @@
             if (confirm('Hapus baris ini?')) {
                 showLoading(true);
                 try {
-                    const res = await fetch(APPS_SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'delete', id: id }) });
+                    const res = await fetch(APPS_SCRIPT_URL, { 
+                        method: 'POST', 
+                        body: JSON.stringify({ apiKey: SECRET_API_KEY, action: 'delete', id: id }) 
+                    });
                     const result = await res.json();
                     if (result.status === 'success') {
                         showToast(result.message);
                         fetchData();
+                    } else {
+                        showToast(result.message, true);
                     }
                 } catch (err) { showToast('Gagal menghapus data', true); }
                 finally { showLoading(false); }
